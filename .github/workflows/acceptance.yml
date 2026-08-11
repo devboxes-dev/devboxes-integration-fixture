@@ -1,13 +1,13 @@
 name: Acceptance
 on:
- pull_request:
- push:
- branches: [a1370-real-github-acceptance]
+  pull_request:
+  push:
+    branches:
+      - a1370-real-github-acceptance
 jobs:
- contract:
- runs-on: ubuntu-latest
- steps:
- - uses: actions/checkout@v4
- - name: Require safe mode
- run: grep -Fxq mode=safe acceptance/review-target.txt
-
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Require safe mode
+        run: grep -Fxq mode=safe acceptance/review-target.txt
