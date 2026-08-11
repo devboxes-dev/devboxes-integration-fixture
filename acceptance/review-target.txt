@@ -1,0 +1,4 @@
+mode=insecure
+retry=unbounded
+issue=https://github.com/devboxes-dev/devboxes-integration-fixture/issues/1
+
