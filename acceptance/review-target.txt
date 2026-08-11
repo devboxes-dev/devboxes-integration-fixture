@@ -1,0 +1,3 @@
+mode=safe
+retry=bounded
+issue=https://github.com/devboxes-dev/devboxes-integration-fixture/issues/1
