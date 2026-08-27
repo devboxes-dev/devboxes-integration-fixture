@@ -47,6 +47,8 @@ describe('validateFixturePath', () => {
       { value: '%2fetc/passwd', reason: 'percent-encoded absolute slash' },
       { value: 'foo%5cbar', reason: 'percent-encoded backslash' },
       { value: 'foo%00bar', reason: 'percent-encoded NUL' },
+      { value: 'foo%bar.json', reason: 'literal percent (any % rejected)' },
+      { value: 'foo%20bar.json', reason: 'non-traversal percent-encoding' },
       { value: 'foo//bar', reason: 'empty segment / not normalized' },
       { value: 'foo/', reason: 'trailing slash' },
       { value: null, reason: 'non-string null' },

@@ -35,6 +35,7 @@ separators, no empty / `.` / `..` segments). Returns `false` otherwise.
 - `foo.json?x=1` (query strings)
 - `foo.json#section` (fragments)
 - `foo/%2e%2e/bar`, `%2e%2e/etc/passwd`, `foo%2fbar` (percent-encoded traversal)
+- `foo%bar.json`, `foo%20bar.json` (any `%` is rejected; not only traversal encodings)
 - `foo//bar`, `foo/` (not normalized)
 
 ## Test
