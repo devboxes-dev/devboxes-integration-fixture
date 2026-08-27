@@ -1,0 +1,10 @@
+{
+  "name": "devboxes-integration-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Integration fixture with a safe fixture-path validator",
+  "main": "src/fixture-path.js",
+  "scripts": {
+    "test": "node --test test/fixture-path.test.js"
+  }
+}
