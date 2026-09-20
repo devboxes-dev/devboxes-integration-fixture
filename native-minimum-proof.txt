@@ -1,0 +1,3 @@
+marker=alpha
+scope=project-first
+checks=passed
