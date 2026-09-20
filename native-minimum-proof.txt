@@ -1,3 +1,4 @@
 marker=alpha
-scope=project-first
+scope=project-second
+secret=absent
 checks=passed
