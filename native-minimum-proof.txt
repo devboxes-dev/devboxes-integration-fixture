@@ -1,0 +1,4 @@
+marker=alpha
+scope=project-second
+secret=absent
+checks=passed
