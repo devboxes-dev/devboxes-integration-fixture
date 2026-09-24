@@ -1,0 +1,1 @@
+totalCents returns unitCents multiplied by quantity for nonnegative integer inputs. totalCents(125,3) === 375 and totalCents(125,0) === 0.

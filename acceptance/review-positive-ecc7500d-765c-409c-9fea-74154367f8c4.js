@@ -1,0 +1,1 @@
+export function totalCents(unitCents, quantity) { return unitCents + quantity; }
