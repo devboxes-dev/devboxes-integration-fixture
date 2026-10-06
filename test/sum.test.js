@@ -9,3 +9,11 @@ test("sum adds two numbers", () => {
 test("multiply multiplies two numbers", () => {
   assert.equal(multiply(2, 3), 6);
 });
+
+test("sum throws TypeError for non-number arguments", () => {
+  assert.throws(() => sum(2, "3"), TypeError);
+});
+
+test("multiply throws TypeError for non-number arguments", () => {
+  assert.throws(() => multiply("2", 3), TypeError);
+});
