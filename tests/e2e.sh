@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 for scenario in examples/*.ini; do
-  for command in run cohort seek breakeven sensitivity check; do
+  for command in run cohort seek breakeven sensitivity check lint; do
     output=$(./scenario-calculator "$command" "$scenario")
     printf '%s' "$output" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
   done
@@ -26,6 +26,9 @@ mc2=$(./scenario-calculator monte-carlo examples/usd-monthly.ini)
 printf '%s' "$mc1" | grep -q '95th percentile'
 printf '%s' "$mc1" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
 if ./scenario-calculator monte-carlo examples/missing-inputs.ini >/dev/null 2>&1; then exit 1; fi
+lint=$(./scenario-calculator lint examples/usd-monthly.ini)
+printf '%s' "$lint" | grep -q 'WARNING: scenario name does not explicitly identify synthetic/example data'
+printf '%s' "$lint" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
 json_file=$(mktemp --suffix=.json)
 trap 'rm -f "$json_file"' EXIT HUP INT TERM
 cat > "$json_file" <<'JSON'

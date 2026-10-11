@@ -534,3 +534,4 @@ Compare requires matching scenario currencies. For example: `./scenario-calculat
 
 `./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini --currency USD` lists changed inputs and computed outputs. `./scenario-calculator html examples/usd-monthly.ini > report.html` produces a self-contained local HTML report.
 
+`./scenario-calculator lint examples/usd-monthly.ini` applies simple checks for scenario names and plausible price/metric values. These are warnings only: a clean result cannot establish that values are synthetic.

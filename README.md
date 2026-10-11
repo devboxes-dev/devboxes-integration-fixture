@@ -25,7 +25,7 @@ Requires a C++17 compiler and Make. No network access or runtime dependency is n
 ./scenario-calculator run examples/usd-monthly.ini --format markdown
 ```
 
-Available commands are `run`, `compare`, `cohort`, `seek`, `breakeven`, `sensitivity`, and `check`. Formats are `text`, `csv`, `markdown`, and `json`. Scenario inputs use INI sections/comments and keys shown in `examples/`. Price is in the declared ISO currency and period (`weekly`, `monthly`, `quarterly`, `annual`); currencies are never combined. Missing values render as unavailable. Edit examples to test assumptions; they are not evidence or recommendations.
+Available commands are `run`, `compare`, `diff`, `html`, `monte-carlo`, `lint`, `cohort`, `seek`, `breakeven`, `sensitivity`, and `check`. Formats are `text`, `csv`, `markdown`, and `json`. Scenario inputs use INI sections/comments and keys shown in `examples/`. Price is in the declared ISO currency and period (`weekly`, `monthly`, `quarterly`, `annual`); currencies are never combined. Missing values render as unavailable. Edit examples to test assumptions; they are not evidence or recommendations.
 
 For a $50,000 monthly target and $10 monthly price, the model computes 5,000 active payers. At 10% monthly expiry loss, maintaining 5,000 requires 500 replacements.
 
@@ -34,3 +34,5 @@ Compare and inspect scenario changes with `./scenario-calculator compare example
 `./scenario-calculator monte-carlo examples/usd-monthly.ini` samples configured `expiry_loss_min/max`, `activation_min/max`, and `paid_min/max` assumptions. Optional `iterations` (1–1,000,000) and `seed` make the run repeatable; output reports 5th, 50th, and 95th percentiles, and is strictly hypothetical.
 
 The optional `--currency USD` flag checks the scenario currency; for `compare`/`diff`, both scenarios must use the same currency and match the requested code. The calculator never converts currencies.
+
+Run `./scenario-calculator lint examples/usd-monthly.ini` to get heuristic warnings for names or values that could be mistaken for real data. A clean lint result is not proof that data is synthetic.
