@@ -2,6 +2,7 @@
 #include "money.hpp"
 #include "text.hpp"
 #include <sstream>
+#include <stdexcept>
 namespace scenario {
 namespace {
 std::string escape_html(const std::string& value) {
@@ -25,7 +26,8 @@ std::string render_html_report(const Inputs& inputs) {
     const auto currency = value(inputs, "currency", "USD");
     const auto price = parse_money(value(inputs, "monthly_price", "10"), currency);
     const auto target = parse_money(value(inputs, "target_mrr", "50000"), currency);
-    const auto payers = (target.units + price.units - 1) / price.units;
+    if (price.units <= 0) throw std::invalid_argument("monthly_price must be positive");
+    const auto payers = payer_count(target, price);
     std::ostringstream out;
     out << "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Hypothetical scenario report</title>"
         << "<style>body{font:16px system-ui,sans-serif;max-width:52rem;margin:3rem auto;padding:0 1rem;color:#18212b}aside{background:#fff3cd;padding:1rem;border-left:5px solid #d39e00}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:.6rem;border-bottom:1px solid #ddd}footer{margin-top:2rem;color:#555}</style></head><body>"

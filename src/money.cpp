@@ -35,4 +35,12 @@ std::string format_money(Money value) {
     out << value.currency << ' ' << std::fixed << std::setprecision(4) << (static_cast<double>(value.units) / 10000.0);
     return out.str();
 }
+long long payer_count(Money target, Money monthly_price) {
+    if (target.currency != monthly_price.currency) throw std::invalid_argument("cannot calculate payers across currencies");
+    if (target.units < 0) throw std::invalid_argument("target MRR cannot be negative");
+    if (monthly_price.units <= 0) throw std::invalid_argument("monthly price must be positive");
+    const long long quotient = target.units / monthly_price.units;
+    const long long remainder = target.units % monthly_price.units;
+    return quotient + (remainder == 0 ? 0 : 1);
+}
 }

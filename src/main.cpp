@@ -20,7 +20,7 @@ long long payers_for(const scenario::Inputs& inputs) {
     const auto price = scenario::parse_money(get(inputs, "monthly_price", "10"), currency);
     if (price.units <= 0) throw std::invalid_argument("monthly_price must be positive");
     const auto target = scenario::parse_money(get(inputs, "target_mrr", "50000"), currency);
-    return (target.units + price.units - 1) / price.units;
+    return scenario::payer_count(target, price);
 }
 void print_diff(const std::string& left_path, const std::string& right_path) {
     const auto left = scenario::read_scenario(left_path);
@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
         const auto price = scenario::parse_money(get(inputs, "monthly_price", "10"), currency);
         const auto target = scenario::parse_money(get(inputs, "target_mrr", "50000"), currency);
         if (price.units <= 0) throw std::invalid_argument("monthly_price must be positive");
-        const long long payers = (target.units + price.units - 1) / price.units;
+        const long long payers = scenario::payer_count(target, price);
         std::cout << "HYPOTHETICAL SCENARIO ONLY — not a forecast or price approval\n"
                   << "Command: " << command << "\nTarget MRR: " << scenario::format_money(target) << "\nMonthly price: " << scenario::format_money(price)
                   << "\nPayers required: " << payers << "\nAt 10% monthly loss, replacements: " << (payers + 9) / 10

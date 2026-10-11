@@ -7,6 +7,7 @@
 #include "scenario_lint.hpp"
 #include <cassert>
 #include <iostream>
+#include <limits>
 #include <stdexcept>
 int main() {
     assert(scenario::trim("  hello\t") == "hello");
@@ -14,6 +15,8 @@ int main() {
     assert(scenario::replace_all("a-a", "a", "b") == "b-b");
     assert(scenario::format_money(scenario::parse_money("1.23445")) == "USD 1.2344");
     assert(scenario::format_money(scenario::parse_money("1.23455")) == "USD 1.2346");
+    assert(scenario::payer_count({std::numeric_limits<long long>::max(), "USD"}, {1, "USD"}) == std::numeric_limits<long long>::max());
+    assert(scenario::payer_count({11, "USD"}, {10, "USD"}) == 2);
     bool overflow_rejected = false;
     try { (void)scenario::parse_money("1000000000000000"); }
     catch (const std::out_of_range&) { overflow_rejected = true; }
@@ -36,6 +39,14 @@ int main() {
     assert(html.find("HYPOTHETICAL ONLY") != std::string::npos);
     assert(html.find("Hypothetical &lt;test&gt;") != std::string::npos);
     assert(html.find("Payers required</th><td>5000") != std::string::npos);
+    bool invalid_report_price_rejected = false;
+    try { (void)scenario::render_html_report({{"currency", "USD"}, {"monthly_price", "0"}}); }
+    catch (const std::invalid_argument&) { invalid_report_price_rejected = true; }
+    assert(invalid_report_price_rejected);
+    invalid_report_price_rejected = false;
+    try { (void)scenario::render_html_report({{"currency", "USD"}, {"monthly_price", "-1"}}); }
+    catch (const std::invalid_argument&) { invalid_report_price_rejected = true; }
+    assert(invalid_report_price_rejected);
     const scenario::Inputs ranges{{"monthly_price", "10"}, {"currency", "USD"}, {"loss_min", "0.05"},
                                   {"loss_max", "0.15"}, {"activation_min", "0.2"}, {"activation_max", "0.5"}};
     const auto simulation_a = scenario::simulate_ranges(ranges, 500, 1234);
