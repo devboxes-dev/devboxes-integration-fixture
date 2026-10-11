@@ -1,6 +1,7 @@
 #include "text.hpp"
 #include "money.hpp"
 #include "csv.hpp"
+#include "scenario_file.hpp"
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
@@ -20,5 +21,8 @@ int main() {
     assert(overflow_rejected);
     assert(scenario::parse_csv("a,\"b,c\"\n")[0][1] == "b,c");
     assert(scenario::parse_csv(scenario::write_csv({{"a", "b,c"}}))[0][1] == "b,c");
+    const auto scenario_inputs = scenario::read_scenario("examples/lean.ini");
+    assert(scenario_inputs.at("monthly_price") == "10");
+    assert(scenario_inputs.at("currency") == "USD");
     std::cout << "C++ unit tests passed\n";
 }
