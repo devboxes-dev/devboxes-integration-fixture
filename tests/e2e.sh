@@ -29,6 +29,13 @@ if ./scenario-calculator monte-carlo examples/missing-inputs.ini >/dev/null 2>&1
 lint=$(./scenario-calculator lint examples/usd-monthly.ini)
 printf '%s' "$lint" | grep -q 'WARNING: scenario name does not explicitly identify synthetic/example data'
 printf '%s' "$lint" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
+price_file=$(mktemp --suffix=.ini)
+trap 'rm -f "$json_file" "$price_file"' EXIT HUP INT TERM
+sed 's/^price = 10$/price = 7.99/' examples/usd-monthly.ini > "$price_file"
+price_result=$(./scenario-calculator run "$price_file")
+printf '%s' "$price_result" | grep -q 'Active payers for target MRR.*6258'
+printf '%s' "$price_result" | grep -q 'Replacement workload.*626'
+printf '%s' "$price_result" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
 json_file=$(mktemp --suffix=.json)
 trap 'rm -f "$json_file"' EXIT HUP INT TERM
 cat > "$json_file" <<'JSON'
