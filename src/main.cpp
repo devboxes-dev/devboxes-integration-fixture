@@ -38,13 +38,28 @@ void print_diff(const std::string& left_path, const std::string& right_path) {
     std::cout << "Payers required: " << payers_for(left) << " -> " << payers_for(right) << '\n'
               << "Coverage limitations: simple steady-state payer arithmetic only; omitted inputs are unavailable.\n";
 }
+std::string currency_option(int argc, char** argv) {
+    for (int i = 2; i < argc; ++i) {
+        if (std::string(argv[i]) == "--currency") {
+            if (i + 1 >= argc) throw std::invalid_argument("--currency requires an ISO currency code");
+            return argv[i + 1];
+        }
+    }
+    return {};
+}
 }
 
 int main(int argc, char** argv) {
     const std::string command = argc > 1 ? argv[1] : "run";
     try {
         if (command == "diff") {
-            if (argc != 4) throw std::invalid_argument("usage: scenario diff LEFT.ini RIGHT.ini");
+            if (argc != 4 && argc != 6) throw std::invalid_argument("usage: scenario diff LEFT.ini RIGHT.ini [--currency CODE]");
+            if (argc == 6 && std::string(argv[4]) != "--currency") throw std::invalid_argument("expected --currency CODE");
+            if (argc == 6) {
+                const auto requested = std::string(argv[5]);
+                scenario::require_currency(scenario::read_scenario(argv[2]), requested);
+                scenario::require_currency(scenario::read_scenario(argv[3]), requested);
+            }
             print_diff(argv[2], argv[3]);
             return 0;
         }
@@ -74,8 +89,10 @@ int main(int argc, char** argv) {
         }
         if (command != "run" && command != "check" && command != "compare" && command != "cohort" && command != "seek" && command != "breakeven" && command != "sensitivity") throw std::invalid_argument("unknown command: " + command);
         scenario::Inputs inputs;
+        const auto requested_currency = currency_option(argc, argv);
         if (argc > 2 && std::string(argv[2]).find(".ini") != std::string::npos) inputs = scenario::read_scenario(argv[2]);
         else { inputs["monthly_price"] = argc > 2 ? argv[2] : "10"; inputs["currency"] = "USD"; }
+        if (!requested_currency.empty()) scenario::require_currency(inputs, requested_currency);
         const std::string currency = get(inputs, "currency", "USD");
         const auto price = scenario::parse_money(get(inputs, "monthly_price", "10"), currency);
         const auto target = scenario::parse_money(get(inputs, "target_mrr", "50000"), currency);

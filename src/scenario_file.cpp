@@ -2,6 +2,7 @@
 #include "text.hpp"
 #include <fstream>
 #include <stdexcept>
+#include <cctype>
 namespace scenario {
 Inputs read_scenario(const std::string& path) {
     std::ifstream input(path);
@@ -20,5 +21,12 @@ Inputs read_scenario(const std::string& path) {
         if (key.empty() || !values.emplace(key, value).second) throw std::runtime_error(path + ":" + std::to_string(number) + ": empty or duplicate key");
     }
     return values;
+}
+void require_currency(const Inputs& inputs, const std::string& currency) {
+    if (currency.size() != 3) throw std::invalid_argument("--currency must be a three-letter ISO code");
+    for (unsigned char c : currency) if (!std::isupper(c)) throw std::invalid_argument("--currency must be an uppercase ISO code");
+    const auto found = inputs.find("currency");
+    const std::string scenario_currency = found == inputs.end() ? "USD" : found->second;
+    if (scenario_currency != currency) throw std::invalid_argument("currency mismatch: scenario is " + scenario_currency + ", requested " + currency);
 }
 }

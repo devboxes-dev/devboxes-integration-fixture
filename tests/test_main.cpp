@@ -26,6 +26,11 @@ int main() {
     const auto scenario_inputs = scenario::read_scenario("examples/lean.ini");
     assert(scenario_inputs.at("monthly_price") == "10");
     assert(scenario_inputs.at("currency") == "USD");
+    scenario::require_currency(scenario_inputs, "USD");
+    bool currency_mismatch_rejected = false;
+    try { scenario::require_currency(scenario_inputs, "EUR"); }
+    catch (const std::invalid_argument&) { currency_mismatch_rejected = true; }
+    assert(currency_mismatch_rejected);
     const auto html = scenario::render_html_report({{"name", "Hypothetical <test>"}, {"currency", "USD"}, {"monthly_price", "10"}});
     assert(html.find("HYPOTHETICAL ONLY") != std::string::npos);
     assert(html.find("Hypothetical &lt;test&gt;") != std::string::npos);
