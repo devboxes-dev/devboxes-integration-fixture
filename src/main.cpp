@@ -1,5 +1,7 @@
 #include "money.hpp"
 #include "scenario_file.hpp"
+#include "html_report.hpp"
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
@@ -43,6 +45,16 @@ int main(int argc, char** argv) {
         if (command == "diff") {
             if (argc != 4) throw std::invalid_argument("usage: scenario diff LEFT.ini RIGHT.ini");
             print_diff(argv[2], argv[3]);
+            return 0;
+        }
+        if (command == "report") {
+            if (argc < 3 || argc > 4) throw std::invalid_argument("usage: scenario report FILE.ini [OUTPUT.html]");
+            const auto html = scenario::render_html_report(scenario::read_scenario(argv[2]));
+            if (argc == 4) {
+                std::ofstream output(argv[3]);
+                if (!output) throw std::runtime_error("cannot write HTML report: " + std::string(argv[3]));
+                output << html;
+            } else std::cout << html;
             return 0;
         }
         if (command != "run" && command != "check" && command != "compare" && command != "cohort" && command != "seek" && command != "breakeven" && command != "sensitivity") throw std::invalid_argument("unknown command: " + command);
