@@ -1,6 +1,7 @@
 #include "money.hpp"
 #include "scenario_file.hpp"
 #include "html_report.hpp"
+#include "monte_carlo.hpp"
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -55,6 +56,20 @@ int main(int argc, char** argv) {
                 if (!output) throw std::runtime_error("cannot write HTML report: " + std::string(argv[3]));
                 output << html;
             } else std::cout << html;
+            return 0;
+        }
+        if (command == "montecarlo") {
+            if (argc < 3 || argc > 5) throw std::invalid_argument("usage: scenario montecarlo FILE.ini [ITERATIONS [SEED]]");
+            const auto inputs = scenario::read_scenario(argv[2]);
+            const auto iterations = argc > 3 ? static_cast<std::size_t>(std::stoull(argv[3])) : 10000U;
+            const auto seed = argc > 4 ? std::stoull(argv[4]) : 42U;
+            const auto result = scenario::simulate_ranges(inputs, iterations, seed);
+            std::cout << "HYPOTHETICAL MONTE CARLO — not a forecast or price approval\n"
+                      << "Seed: " << seed << "\nIterations: " << iterations << "\n"
+                      << "Loss rate p10/p50/p90: " << result.loss_p10 << '/' << result.loss_p50 << '/' << result.loss_p90 << '\n'
+                      << "Activation probability p10/p50/p90: " << result.activation_p10 << '/' << result.activation_p50 << '/' << result.activation_p90 << '\n'
+                      << "Required activations p10/p50/p90: " << result.workload_p10 << '/' << result.workload_p50 << '/' << result.workload_p90 << '\n'
+                      << "Coverage: independent uniform sampling of provided ranges; not empirical probability or forecast.\n";
             return 0;
         }
         if (command != "run" && command != "check" && command != "compare" && command != "cohort" && command != "seek" && command != "breakeven" && command != "sensitivity") throw std::invalid_argument("unknown command: " + command);

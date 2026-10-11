@@ -3,6 +3,7 @@
 #include "csv.hpp"
 #include "scenario_file.hpp"
 #include "html_report.hpp"
+#include "monte_carlo.hpp"
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
@@ -29,5 +30,15 @@ int main() {
     assert(html.find("HYPOTHETICAL ONLY") != std::string::npos);
     assert(html.find("Hypothetical &lt;test&gt;") != std::string::npos);
     assert(html.find("Payers required</th><td>5000") != std::string::npos);
+    const scenario::Inputs ranges{{"monthly_price", "10"}, {"currency", "USD"}, {"loss_min", "0.05"},
+                                  {"loss_max", "0.15"}, {"activation_min", "0.2"}, {"activation_max", "0.5"}};
+    const auto simulation_a = scenario::simulate_ranges(ranges, 500, 1234);
+    const auto simulation_b = scenario::simulate_ranges(ranges, 500, 1234);
+    assert(simulation_a.workload_p50 == simulation_b.workload_p50);
+    assert(simulation_a.workload_p10 <= simulation_a.workload_p50);
+    bool unavailable_rejected = false;
+    try { (void)scenario::simulate_ranges({{"loss_min", "0.1"}}, 10, 1); }
+    catch (const std::invalid_argument&) { unavailable_rejected = true; }
+    assert(unavailable_rejected);
     std::cout << "C++ unit tests passed\n";
 }
