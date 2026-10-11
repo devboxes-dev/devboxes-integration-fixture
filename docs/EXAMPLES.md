@@ -399,3 +399,7 @@ Run `./scenario-calculator html <scenario>` for any of the five examples. Each e
 ## Scenario diff
 
 `./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini` reports differences in declared inputs and derived active-payer/replacement outputs. Only differing fields are shown; output remains hypothetical.
+
+## Monte Carlo assumption sampling
+
+The `usd-monthly.ini` example configures expiry-loss, activation, and activation-to-paid bounds, with 2,000 iterations and seed 17. `./scenario-calculator monte-carlo examples/usd-monthly.ini` deterministically prints 5th, 50th, and 95th percentile replacement and first-open workloads, labelled **HYPOTHETICAL / NOT A FORECAST**. Other examples intentionally omit ranges and therefore cannot run this calculation until edited with synthetic bounds.

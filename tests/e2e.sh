@@ -19,6 +19,12 @@ html=$(./scenario-calculator html examples/usd-monthly.ini)
 printf '%s' "$html" | grep -q '<!doctype html>'
 printf '%s' "$html" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
 if printf '%s' "$html" | grep -Eiq '<(script|link)[^>]+(src|href)='; then exit 1; fi
+mc1=$(./scenario-calculator monte-carlo examples/usd-monthly.ini)
+mc2=$(./scenario-calculator monte-carlo examples/usd-monthly.ini)
+[ "$mc1" = "$mc2" ]
+printf '%s' "$mc1" | grep -q '95th percentile'
+printf '%s' "$mc1" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
+if ./scenario-calculator monte-carlo examples/missing-inputs.ini >/dev/null 2>&1; then exit 1; fi
 json_file=$(mktemp --suffix=.json)
 trap 'rm -f "$json_file"' EXIT HUP INT TERM
 cat > "$json_file" <<'JSON'
