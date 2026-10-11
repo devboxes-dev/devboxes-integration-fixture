@@ -1,0 +1,6 @@
+#include "scenario/csv.hpp"
+#include <stdexcept>
+namespace scenario {
+Csv read_csv(const std::string& s){Csv rows;std::vector<std::string> row;std::string f;bool q=false,closed=false;std::size_t line=1,start=1;for(std::size_t i=0;i<s.size();++i){char c=s[i];if(q){if(c=='"'){if(i+1<s.size()&&s[i+1]=='"'){f+='"';++i;}else{q=false;closed=true;}}else{f+=c;if(c=='\n')++line;}continue;}if(closed&&c!=','&&c!='\r'&&c!='\n')throw std::runtime_error("malformed CSV row at line "+std::to_string(line));if(c=='"'){if(!f.empty())throw std::runtime_error("malformed CSV row at line "+std::to_string(line));q=true;}else if(c==','){row.push_back(f);f.clear();closed=false;}else if(c=='\n'||c=='\r'){if(c=='\r'&&i+1<s.size()&&s[i+1]=='\n')++i;row.push_back(f);f.clear();rows.push_back(row);row.clear();closed=false;++line;start=line;}else f+=c;}if(q)throw std::runtime_error("malformed CSV row at line "+std::to_string(start));if(!f.empty()||!row.empty()){row.push_back(f);rows.push_back(row);}return rows;}
+std::string write_csv(const Csv& rows){std::string out;for(std::size_t i=0;i<rows.size();++i){if(i)out+='\n';for(std::size_t j=0;j<rows[i].size();++j){if(j)out+=',';const auto& f=rows[i][j];bool quote=f.find_first_of(",\"\r\n")!=std::string::npos;if(quote)out+='"';for(char c:f){out+=c;if(c=='"')out+='"';}if(quote)out+='"';}}return out;}
+}

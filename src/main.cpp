@@ -1,0 +1,5 @@
+#include "scenario/scenario.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
+int main(int argc,char**argv){if(argc<2||std::string(argv[1])=="--help"||std::string(argv[1])=="-h"){std::cout<<"scenario-calculator <run|compare|cohort|seek|breakeven|sensitivity|check> <scenario.ini> [--format text|csv|markdown|json]\nAll results are HYPOTHETICAL / NOT A FORECAST.\n";return argc<2?1:0;}std::string cmd=argv[1],format="text";if(cmd!="run"&&cmd!="compare"&&cmd!="cohort"&&cmd!="seek"&&cmd!="breakeven"&&cmd!="sensitivity"&&cmd!="check"){std::cerr<<"Unknown command: "<<cmd<<"\n";return 2;}if(argc<3){std::cerr<<"A scenario file is required\n";return 2;}std::vector<std::string> files;for(int i=2;i<argc;++i){std::string a=argv[i];if(a=="--format"&&i+1<argc)format=argv[++i];else if(a.rfind("--",0)==0){std::cerr<<"Unknown flag: "<<a<<"\n";return 2;}else files.push_back(a);}if(cmd=="compare"){}try{for(const auto&f:files){auto m=scenario::load(f);std::cout<<scenario::execute(m,cmd,format);}}catch(const std::exception&e){std::cerr<<e.what()<<"\n";return 1;}return 0;}
