@@ -28,7 +28,8 @@ test: $(BUILD)/scenario $(BUILD)/tests
 	@if command -v node >/dev/null 2>&1; then node --test; else echo "Node.js unavailable; skipping existing JavaScript tests"; fi
 
 examples: $(BUILD)/scenario
-	@for file in examples/*.ini; do echo "== $$file =="; $(BUILD)/scenario run 10 || exit $$?; done
+	@for file in examples/*.ini; do echo "== $$file =="; $(BUILD)/scenario run "$$file" || exit $$?; done
+	@for file in examples/*.ini; do echo "== lint $$file =="; $(BUILD)/scenario lint "$$file" || exit $$?; done
 
 clean:
 	rm -rf $(BUILD)

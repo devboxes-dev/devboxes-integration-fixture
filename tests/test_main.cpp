@@ -4,6 +4,7 @@
 #include "scenario_file.hpp"
 #include "html_report.hpp"
 #include "monte_carlo.hpp"
+#include "scenario_lint.hpp"
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
@@ -45,5 +46,8 @@ int main() {
     try { (void)scenario::simulate_ranges({{"loss_min", "0.1"}}, 10, 1); }
     catch (const std::invalid_argument&) { unavailable_rejected = true; }
     assert(unavailable_rejected);
+    const auto lint_warnings = scenario::lint_scenario_text("name=Hypothetical\ncontact=customer@example.com\n");
+    assert(lint_warnings.size() == 1);
+    assert(lint_warnings[0].find("customer@example.com") == std::string::npos);
     std::cout << "C++ unit tests passed\n";
 }

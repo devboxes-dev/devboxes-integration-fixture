@@ -2,7 +2,9 @@
 #include "scenario_file.hpp"
 #include "html_report.hpp"
 #include "monte_carlo.hpp"
+#include "scenario_lint.hpp"
 #include <fstream>
+#include <iterator>
 #include <iostream>
 #include <map>
 #include <string>
@@ -86,6 +88,18 @@ int main(int argc, char** argv) {
                       << "Required activations p10/p50/p90: " << result.workload_p10 << '/' << result.workload_p50 << '/' << result.workload_p90 << '\n'
                       << "Coverage: independent uniform sampling of provided ranges; not empirical probability or forecast.\n";
             return 0;
+        }
+        if (command == "lint") {
+            if (argc != 3) throw std::invalid_argument("usage: scenario lint FILE.ini");
+            const auto inputs = scenario::read_scenario(argv[2]);
+            std::ifstream file(argv[2]);
+            const std::string text((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            const auto warnings = scenario::lint_scenario_text(text);
+            std::cout << "Hypothetical example lint (heuristic; warnings are not proof of real data): " << argv[2] << '\n';
+            if (warnings.empty()) std::cout << "No heuristic warnings. This does not verify that values are hypothetical.\n";
+            for (const auto& warning : warnings) std::cout << warning << '\n';
+            (void)inputs;
+            return warnings.empty() ? 0 : 1;
         }
         if (command != "run" && command != "check" && command != "compare" && command != "cohort" && command != "seek" && command != "breakeven" && command != "sensitivity") throw std::invalid_argument("unknown command: " + command);
         scenario::Inputs inputs;
