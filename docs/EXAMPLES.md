@@ -1,6 +1,6 @@
 # Example outputs
 
-All examples and outputs are **HYPOTHETICAL / NOT A FORECAST**. Inputs are synthetic, editable illustrations, not approved pricing, live data, or forecasts.
+All inputs and outputs are synthetic and labelled **HYPOTHETICAL / NOT A FORECAST**. No live data or approved price is represented.
 
 ## examples/eur-quarterly.ini
 
@@ -81,6 +81,33 @@ HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
 Scenario valid: EUR quarterly illustration
 ```
 
+### `monte-carlo`
+
+```text
+```
+
+### `html`
+
+```text
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HYPOTHETICAL — EUR quarterly illustration</title><style>body{font:16px system-ui;max-width:900px;margin:3rem auto;padding:0 1rem;color:#222}h1{color:#8b1e1e}.warning{border:2px solid #b00;padding:1rem;font-weight:bold}pre{white-space:pre-wrap;background:#f4f4f4;padding:1rem;overflow:auto}</style><h1>HYPOTHETICAL / NOT A FORECAST</h1><p class="warning">Synthetic decision-preparation scenario only. Not approved pricing, live data, a forecast, or campaign authorization.</p><h2>EUR quarterly illustration</h2><pre>HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
+Scenario                              EUR quarterly illustration
+Currency                              EUR
+Monthly-normalized price              EUR 30.000000
+Active payers for target MRR          1500
+Target MRR                            EUR 45000.000000
+
+Cohort (active payers; each value HYPOTHETICAL)
+2026-01                               250 active; 0 lost
+2026-02                               470 active; 30 lost
+2026-03                               664 active; 56 lost
+2026-04                               834 active; 80 lost
+2026-05                               984 active; 100 lost
+2026-06                               1116 active; 118 lost
+Replacement workload                  180
+First opens for paid users            104167
+</pre></html>
+```
+
 ## examples/gbp-weekly.ini
 
 ### `run`
@@ -109,7 +136,7 @@ First opens for paid users            92334
 ```text
 HYPOTHETICAL / NOT A FORECAST — scenario comparison
 GBP weekly illustration        currency=GBP monthly_price=GBP 21.666667 target_payers=1385 replacements=208
-EUR quarterly illustration     currency=EUR monthly_price=EUR 30.000000 target_payers=1500 replacements=180
+GBP weekly illustration        currency=GBP monthly_price=GBP 21.666667 target_payers=1385 replacements=208
 ```
 
 ### `cohort`
@@ -160,6 +187,33 @@ HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
 Scenario valid: GBP weekly illustration
 ```
 
+### `monte-carlo`
+
+```text
+```
+
+### `html`
+
+```text
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HYPOTHETICAL — GBP weekly illustration</title><style>body{font:16px system-ui;max-width:900px;margin:3rem auto;padding:0 1rem;color:#222}h1{color:#8b1e1e}.warning{border:2px solid #b00;padding:1rem;font-weight:bold}pre{white-space:pre-wrap;background:#f4f4f4;padding:1rem;overflow:auto}</style><h1>HYPOTHETICAL / NOT A FORECAST</h1><p class="warning">Synthetic decision-preparation scenario only. Not approved pricing, live data, a forecast, or campaign authorization.</p><h2>GBP weekly illustration</h2><pre>HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
+Scenario                              GBP weekly illustration
+Currency                              GBP
+Monthly-normalized price              GBP 21.666667
+Active payers for target MRR          1385
+Target MRR                            GBP 30000.000000
+
+Cohort (active payers; each value HYPOTHETICAL)
+2026-01                               230 active; 0 lost
+2026-02                               426 active; 35 lost
+2026-03                               592 active; 64 lost
+2026-04                               733 active; 89 lost
+2026-05                               853 active; 110 lost
+2026-06                               955 active; 128 lost
+Replacement workload                  208
+First opens for paid users            92334
+</pre></html>
+```
+
 ## examples/missing-inputs.ini
 
 ### `run`
@@ -185,7 +239,7 @@ First opens for paid users            unavailable (conversion probability is mis
 ```text
 HYPOTHETICAL / NOT A FORECAST — scenario comparison
 Missing-input demonstration    currency=USD monthly_price=unavailable target_payers=unavailable replacements=unavailable
-EUR quarterly illustration     currency=EUR monthly_price=EUR 30.000000 target_payers=1500 replacements=180
+Missing-input demonstration    currency=USD monthly_price=unavailable target_payers=unavailable replacements=unavailable
 ```
 
 ### `cohort`
@@ -233,6 +287,30 @@ HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
 Scenario valid: Missing-input demonstration
 ```
 
+### `monte-carlo`
+
+```text
+```
+
+### `html`
+
+```text
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HYPOTHETICAL — Missing-input demonstration</title><style>body{font:16px system-ui;max-width:900px;margin:3rem auto;padding:0 1rem;color:#222}h1{color:#8b1e1e}.warning{border:2px solid #b00;padding:1rem;font-weight:bold}pre{white-space:pre-wrap;background:#f4f4f4;padding:1rem;overflow:auto}</style><h1>HYPOTHETICAL / NOT A FORECAST</h1><p class="warning">Synthetic decision-preparation scenario only. Not approved pricing, live data, a forecast, or campaign authorization.</p><h2>Missing-input demonstration</h2><pre>HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
+Scenario                              Missing-input demonstration
+Currency                              USD
+Monthly-normalized price              unavailable (price missing)
+Active payers for target MRR          unavailable (price missing)
+Target MRR                            USD 50000.000000
+
+Cohort (active payers; each value HYPOTHETICAL)
+2026-01                               0 active; 0 lost
+2026-02                               0 active; 0 lost
+2026-03                               0 active; 0 lost
+Replacement workload                  unavailable (price or expiry_loss missing)
+First opens for paid users            unavailable (conversion probability is missing or zero)
+</pre></html>
+```
+
 ## examples/usd-annual.ini
 
 ### `run`
@@ -261,7 +339,7 @@ First opens for paid users            166667
 ```text
 HYPOTHETICAL / NOT A FORECAST — scenario comparison
 USD annual illustration        currency=USD monthly_price=USD 10.000000 target_payers=5000 replacements=400
-EUR quarterly illustration     currency=EUR monthly_price=EUR 30.000000 target_payers=1500 replacements=180
+USD monthly starter            currency=USD monthly_price=USD 10.000000 target_payers=5000 replacements=500
 ```
 
 ### `cohort`
@@ -312,6 +390,33 @@ HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
 Scenario valid: USD annual illustration
 ```
 
+### `monte-carlo`
+
+```text
+```
+
+### `html`
+
+```text
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HYPOTHETICAL — USD annual illustration</title><style>body{font:16px system-ui;max-width:900px;margin:3rem auto;padding:0 1rem;color:#222}h1{color:#8b1e1e}.warning{border:2px solid #b00;padding:1rem;font-weight:bold}pre{white-space:pre-wrap;background:#f4f4f4;padding:1rem;overflow:auto}</style><h1>HYPOTHETICAL / NOT A FORECAST</h1><p class="warning">Synthetic decision-preparation scenario only. Not approved pricing, live data, a forecast, or campaign authorization.</p><h2>USD annual illustration</h2><pre>HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
+Scenario                              USD annual illustration
+Currency                              USD
+Monthly-normalized price              USD 10.000000
+Active payers for target MRR          5000
+Target MRR                            USD 50000.000000
+
+Cohort (active payers; each value HYPOTHETICAL)
+2026-01                               833 active; 0 lost
+2026-02                               1599 active; 67 lost
+2026-03                               2304 active; 128 lost
+2026-04                               2953 active; 184 lost
+2026-05                               3550 active; 236 lost
+2026-06                               4099 active; 284 lost
+Replacement workload                  400
+First opens for paid users            166667
+</pre></html>
+```
+
 ## examples/usd-monthly.ini
 
 ### `run`
@@ -340,7 +445,7 @@ First opens for paid users            250000
 ```text
 HYPOTHETICAL / NOT A FORECAST — scenario comparison
 USD monthly starter            currency=USD monthly_price=USD 10.000000 target_payers=5000 replacements=500
-EUR quarterly illustration     currency=EUR monthly_price=EUR 30.000000 target_payers=1500 replacements=180
+USD annual illustration        currency=USD monthly_price=USD 10.000000 target_payers=5000 replacements=400
 ```
 
 ### `cohort`
@@ -391,15 +496,41 @@ HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
 Scenario valid: USD monthly starter
 ```
 
+### `monte-carlo`
 
-## Self-contained HTML reports
+```text
+HYPOTHETICAL / NOT A FORECAST — Monte Carlo assumption sampling
+seed=17 iterations=2000
+5th percentile replacements=278; first opens=187076
+50th percentile replacements=503; first opens=255173
+95th percentile replacements=720; first opens=350521
+```
 
-Run `./scenario-calculator html <scenario>` for any of the five examples. Each emits an offline HTML page with inline styling and the prominent **HYPOTHETICAL / NOT A FORECAST** warning. For instance, `./scenario-calculator html examples/usd-monthly.ini > report.html` creates a file you can open locally. The report embeds the same synthetic run values listed above.
+### `html`
 
-## Scenario diff
+```text
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HYPOTHETICAL — USD monthly starter</title><style>body{font:16px system-ui;max-width:900px;margin:3rem auto;padding:0 1rem;color:#222}h1{color:#8b1e1e}.warning{border:2px solid #b00;padding:1rem;font-weight:bold}pre{white-space:pre-wrap;background:#f4f4f4;padding:1rem;overflow:auto}</style><h1>HYPOTHETICAL / NOT A FORECAST</h1><p class="warning">Synthetic decision-preparation scenario only. Not approved pricing, live data, a forecast, or campaign authorization.</p><h2>USD monthly starter</h2><pre>HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
+Scenario                              USD monthly starter
+Currency                              USD
+Monthly-normalized price              USD 10.000000
+Active payers for target MRR          5000
+Target MRR                            USD 50000.000000
 
-`./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini` reports differences in declared inputs and derived active-payer/replacement outputs. Only differing fields are shown; output remains hypothetical.
+Cohort (active payers; each value HYPOTHETICAL)
+2026-01                               833 active; 0 lost
+2026-02                               1583 active; 83 lost
+2026-03                               2257 active; 158 lost
+2026-04                               2865 active; 226 lost
+2026-05                               3411 active; 286 lost
+2026-06                               3903 active; 341 lost
+Replacement workload                  500
+First opens for paid users            250000
+</pre></html>
+```
 
-## Monte Carlo assumption sampling
+## Currency safety, differences, and offline reports
 
-The `usd-monthly.ini` example configures expiry-loss, activation, and activation-to-paid bounds, with 2,000 iterations and seed 17. `./scenario-calculator monte-carlo examples/usd-monthly.ini` deterministically prints 5th, 50th, and 95th percentile replacement and first-open workloads, labelled **HYPOTHETICAL / NOT A FORECAST**. Other examples intentionally omit ranges and therefore cannot run this calculation until edited with synthetic bounds.
+Compare requires matching scenario currencies. For example: `./scenario-calculator compare examples/usd-monthly.ini examples/usd-annual.ini --currency USD`. Mixed-currency comparisons and a mismatched `--currency` fail rather than converting or combining values.
+
+`./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini --currency USD` lists changed inputs and computed outputs. `./scenario-calculator html examples/usd-monthly.ini > report.html` produces a self-contained local HTML report.
+

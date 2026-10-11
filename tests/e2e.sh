@@ -6,12 +6,13 @@ for scenario in examples/*.ini; do
     printf '%s' "$output" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
   done
 done
-comparison=$(./scenario-calculator compare examples/usd-monthly.ini examples/eur-quarterly.ini)
+comparison=$(./scenario-calculator compare examples/usd-monthly.ini examples/usd-annual.ini --currency USD)
 printf '%s' "$comparison" | grep -q 'USD monthly starter'
-printf '%s' "$comparison" | grep -q 'EUR quarterly illustration'
+printf '%s' "$comparison" | grep -q 'USD annual illustration'
 printf '%s' "$comparison" | grep -q 'target_payers=5000'
-if ./scenario-calculator compare examples/usd-monthly.ini >/dev/null 2>&1; then exit 1; fi
-diff=$(./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini)
+if ./scenario-calculator compare examples/usd-monthly.ini examples/eur-quarterly.ini >/dev/null 2>&1; then exit 1; fi
+if ./scenario-calculator compare examples/usd-monthly.ini examples/usd-annual.ini --currency EUR >/dev/null 2>&1; then exit 1; fi
+diff=$(./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini --currency USD)
 printf '%s' "$diff" | grep -q 'price:'
 printf '%s' "$diff" | grep -q 'output.monthly_replacements:'
 if ./scenario-calculator diff examples/usd-monthly.ini >/dev/null 2>&1; then exit 1; fi

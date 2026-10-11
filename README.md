@@ -32,3 +32,5 @@ For a $50,000 monthly target and $10 monthly price, the model computes 5,000 act
 Compare and inspect scenario changes with `./scenario-calculator compare examples/a.ini examples/b.ini` and `./scenario-calculator diff examples/a.ini examples/b.ini`. Create a self-contained page with `./scenario-calculator html examples/usd-monthly.ini > report.html`; it has no external assets and repeats the hypothetical disclaimer.
 
 `./scenario-calculator monte-carlo examples/usd-monthly.ini` samples configured `expiry_loss_min/max`, `activation_min/max`, and `paid_min/max` assumptions. Optional `iterations` (1–1,000,000) and `seed` make the run repeatable; output reports 5th, 50th, and 95th percentiles, and is strictly hypothetical.
+
+The optional `--currency USD` flag checks the scenario currency; for `compare`/`diff`, both scenarios must use the same currency and match the requested code. The calculator never converts currencies.
