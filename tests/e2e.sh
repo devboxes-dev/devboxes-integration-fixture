@@ -11,6 +11,10 @@ printf '%s' "$comparison" | grep -q 'USD monthly starter'
 printf '%s' "$comparison" | grep -q 'EUR quarterly illustration'
 printf '%s' "$comparison" | grep -q 'target_payers=5000'
 if ./scenario-calculator compare examples/usd-monthly.ini >/dev/null 2>&1; then exit 1; fi
+diff=$(./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini)
+printf '%s' "$diff" | grep -q 'price:'
+printf '%s' "$diff" | grep -q 'output.monthly_replacements:'
+if ./scenario-calculator diff examples/usd-monthly.ini >/dev/null 2>&1; then exit 1; fi
 json_file=$(mktemp --suffix=.json)
 trap 'rm -f "$json_file"' EXIT HUP INT TERM
 cat > "$json_file" <<'JSON'
