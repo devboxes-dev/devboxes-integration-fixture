@@ -28,3 +28,5 @@ Requires a C++17 compiler and Make. No network access or runtime dependency is n
 Available commands are `run`, `compare`, `cohort`, `seek`, `breakeven`, `sensitivity`, and `check`. Formats are `text`, `csv`, `markdown`, and `json`. Scenario inputs use INI sections/comments and keys shown in `examples/`. Price is in the declared ISO currency and period (`weekly`, `monthly`, `quarterly`, `annual`); currencies are never combined. Missing values render as unavailable. Edit examples to test assumptions; they are not evidence or recommendations.
 
 For a $50,000 monthly target and $10 monthly price, the model computes 5,000 active payers. At 10% monthly expiry loss, maintaining 5,000 requires 500 replacements.
+
+Compare and inspect scenario changes with `./scenario-calculator compare examples/a.ini examples/b.ini` and `./scenario-calculator diff examples/a.ini examples/b.ini`. Create a self-contained page with `./scenario-calculator html examples/usd-monthly.ini > report.html`; it has no external assets and repeats the hypothetical disclaimer.

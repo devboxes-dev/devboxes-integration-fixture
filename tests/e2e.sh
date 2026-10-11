@@ -15,6 +15,10 @@ diff=$(./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.i
 printf '%s' "$diff" | grep -q 'price:'
 printf '%s' "$diff" | grep -q 'output.monthly_replacements:'
 if ./scenario-calculator diff examples/usd-monthly.ini >/dev/null 2>&1; then exit 1; fi
+html=$(./scenario-calculator html examples/usd-monthly.ini)
+printf '%s' "$html" | grep -q '<!doctype html>'
+printf '%s' "$html" | grep -q 'HYPOTHETICAL / NOT A FORECAST'
+if printf '%s' "$html" | grep -Eiq '<(script|link)[^>]+(src|href)='; then exit 1; fi
 json_file=$(mktemp --suffix=.json)
 trap 'rm -f "$json_file"' EXIT HUP INT TERM
 cat > "$json_file" <<'JSON'

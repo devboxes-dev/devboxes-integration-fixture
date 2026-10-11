@@ -391,3 +391,11 @@ HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
 Scenario valid: USD monthly starter
 ```
 
+
+## Self-contained HTML reports
+
+Run `./scenario-calculator html <scenario>` for any of the five examples. Each emits an offline HTML page with inline styling and the prominent **HYPOTHETICAL / NOT A FORECAST** warning. For instance, `./scenario-calculator html examples/usd-monthly.ini > report.html` creates a file you can open locally. The report embeds the same synthetic run values listed above.
+
+## Scenario diff
+
+`./scenario-calculator diff examples/usd-monthly.ini examples/usd-annual.ini` reports differences in declared inputs and derived active-payer/replacement outputs. Only differing fields are shown; output remains hypothetical.
