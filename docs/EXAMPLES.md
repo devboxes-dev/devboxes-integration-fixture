@@ -45,7 +45,7 @@ First opens for paid users            104167
 
 ```text
 HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
-Monthly new payers to reach target    792
+Monthly new payers to reach target    337
 ```
 
 ### `breakeven`
@@ -139,7 +139,7 @@ First opens for paid users            92334
 
 ```text
 HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
-Monthly new payers to reach target    615
+Monthly new payers to reach target    334
 ```
 
 ### `breakeven`
@@ -227,7 +227,7 @@ First opens for paid users            unavailable (conversion probability is mis
 
 ```text
 HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
-Monthly new payers to reach target    unavailable (price missing)
+Monthly new payers to reach target    unavailable (price or expiry_loss missing)
 ```
 
 ### `breakeven`
@@ -321,7 +321,7 @@ First opens for paid users            166667
 
 ```text
 HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
-Monthly new payers to reach target    3296
+Monthly new payers to reach target    1017
 ```
 
 ### `breakeven`
@@ -415,7 +415,7 @@ First opens for paid users            250000
 
 ```text
 HYPOTHETICAL / NOT A FORECAST — synthetic scenario only
-Monthly new payers to reach target    2953
+Monthly new payers to reach target    1068
 ```
 
 ### `breakeven`
@@ -486,16 +486,6 @@ output.monthly_replacements: USD monthly starter=500; USD annual illustration=40
 
 The `--currency CODE` option validates inputs, and compare/diff refuse to mix currencies. Monte Carlo samples only the configured synthetic ranges and uses a reproducible seed. Lint heuristics may warn but cannot prove inputs are synthetic.
 
-## Requested price scenario — $7.99 USD/month
+## Corrected recurring-acquisition seek
 
-Starting from the synthetic `usd-monthly.ini` assumptions and changing only its hypothetical price to USD 7.99/month produces:
-
-```text
-HYPOTHETICAL / NOT A FORECAST
-Monthly-normalized price: USD 7.990000
-Active payers for target MRR: 6258
-Replacement workload at 10% expiry loss: 626 per month
-First opens at the configured 20% × 10% conversion: 312900
-```
-
-This is arithmetic from editable synthetic assumptions only—not an approved price, forecast, or real scoreboard value.
+For the USD 10/month example (5,000 target active payers, 10% monthly expiry loss, six months), `seek` accounts for every monthly acquisition cohort and returns 1,068 new payers per month, rather than treating all required acquisition as a single starting cohort.
