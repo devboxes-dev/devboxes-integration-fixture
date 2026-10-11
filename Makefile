@@ -5,7 +5,7 @@ BUILD := build
 SOURCES := $(wildcard src/*.cpp)
 OBJECTS := $(patsubst src/%.cpp,$(BUILD)/%.o,$(SOURCES))
 
-.PHONY: all test clean
+.PHONY: all test clean examples
 all: $(BUILD)/scenario
 
 $(BUILD):
@@ -25,7 +25,10 @@ $(BUILD)/tests.o: tests/test_main.cpp | $(BUILD)
 
 test: $(BUILD)/scenario $(BUILD)/tests
 	$(BUILD)/tests
-	node --test
+	@if command -v node >/dev/null 2>&1; then node --test; else echo "Node.js unavailable; skipping existing JavaScript tests"; fi
+
+examples: $(BUILD)/scenario
+	@for file in examples/*.ini; do echo "== $$file =="; $(BUILD)/scenario run 10 || exit $$?; done
 
 clean:
 	rm -rf $(BUILD)
