@@ -2,11 +2,11 @@
 
 ## Usage
 
-Print an invoice total from an amount in cents:
+Print an invoice total from an amount in whole cents:
 
 ```sh
 node bin/total.js 150   # prints 1.50
 node bin/total.js -150  # prints -1.50
 ```
 
-Run it without a number, or with something that is not a number, and it prints how to use it and exits with a non-zero status.
+Amounts must be whole cents. Run it without one, or with something that is not a whole number — including a fractional amount such as `1.5` — and it prints how to use it and exits with a non-zero status.

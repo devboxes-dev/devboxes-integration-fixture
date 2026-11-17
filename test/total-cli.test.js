@@ -34,6 +34,12 @@ test("prints usage for an empty amount", () => {
   assertUsage(runTotal(""));
 });
 
+test("prints usage for a fractional amount", () => {
+  assertUsage(runTotal("1.5"));
+  assertUsage(runTotal("-0.5"));
+  assertUsage(runTotal("2.25"));
+});
+
 test("prints the formatted total for a number of cents", () => {
   assert.deepEqual(runTotal("150"), { stdout: "1.50\n", stderr: "", status: 0 });
   assert.deepEqual(runTotal("-150"), { stdout: "-1.50\n", stderr: "", status: 0 });
