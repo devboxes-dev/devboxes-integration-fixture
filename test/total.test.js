@@ -26,3 +26,14 @@ test("formatTotal formats positive amounts", () => {
   assert.equal(formatTotal(5), "0.05");
   assert.equal(formatTotal(12345), "123.45");
 });
+
+test("formatTotal groups thousands in positive amounts", () => {
+  assert.equal(formatTotal(123456789), "1,234,567.89");
+  assert.equal(formatTotal(100000), "1,000.00");
+  assert.equal(formatTotal(99999999), "999,999.99");
+  assert.equal(formatTotal(100000000), "1,000,000.00");
+});
+
+test("formatTotal groups thousands in negative amounts", () => {
+  assert.equal(formatTotal(-123456789), "-1,234,567.89");
+});
