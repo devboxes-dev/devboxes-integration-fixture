@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add two numbers</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 3rem auto;
+        max-width: 24rem;
+        padding: 0 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 1rem;
+      }
+      input {
+        display: block;
+        font-size: 1rem;
+        margin-top: 0.25rem;
+        padding: 0.4rem;
+        width: 100%;
+      }
+      output {
+        display: block;
+        font-size: 2rem;
+        font-weight: bold;
+        min-height: 2.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Add two numbers</h1>
+    <label>First number <input id="a" type="number" step="any" /></label>
+    <label>Second number <input id="b" type="number" step="any" /></label>
+    <p>Sum: <output id="sum" for="a b"></output></p>
+    <script type="module">
+      import { wire } from "./src/sum-page.js";
+
+      wire();
+    </script>
+  </body>
+</html>

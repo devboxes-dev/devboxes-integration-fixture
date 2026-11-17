@@ -3,7 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "node bin/serve.js",
     "test": "node --test",
-    "lint": "node --check src/sum.js"
+    "lint": "node --check src/sum.js && node --check src/total.js && node --check src/sum-page.js && node --check bin/total.js && node --check bin/serve.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.1"
   }
 }
