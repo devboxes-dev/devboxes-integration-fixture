@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Add two numbers</title>
+    <style>
+      body {
+        max-width: 24rem;
+        margin: 3rem auto;
+        padding: 0 1rem;
+        font-family: system-ui, sans-serif;
+      }
+      label {
+        display: block;
+        margin-top: 0.75rem;
+      }
+      input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+      }
+      output {
+        font-weight: 600;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Add two numbers</h1>
+    <label for="a">First number</label>
+    <input id="a" type="number" step="any" inputmode="decimal" />
+    <label for="b">Second number</label>
+    <input id="b" type="number" step="any" inputmode="decimal" />
+    <p>Sum: <output id="result" for="a b">0</output></p>
+    <script>
+      const first = document.getElementById("a");
+      const second = document.getElementById("b");
+      const result = document.getElementById("result");
+
+      const add = () => {
+        result.textContent = String(Number(first.value) + Number(second.value));
+      };
+
+      first.addEventListener("input", add);
+      second.addEventListener("input", add);
+      add();
+    </script>
+  </body>
+</html>
