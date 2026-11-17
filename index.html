@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add two numbers</title>
+    <style>
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: #f4f5f7;
+        color: #1c1e21;
+        font-family: system-ui, sans-serif;
+      }
+
+      main {
+        width: min(22rem, calc(100% - 2rem));
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 10%);
+      }
+
+      h1 {
+        margin: 0 0 1rem;
+        font-size: 1.25rem;
+      }
+
+      form {
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      label {
+        font-size: 0.875rem;
+      }
+
+      input {
+        padding: 0.5rem;
+        border: 1px solid #c4c7cc;
+        border-radius: 0.375rem;
+        font-size: 1rem;
+      }
+
+      button {
+        margin-top: 0.25rem;
+        padding: 0.5rem;
+        border: 0;
+        border-radius: 0.375rem;
+        background: #1c64d9;
+        color: #ffffff;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      output {
+        display: block;
+        margin-top: 1rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        min-height: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Add two numbers</h1>
+      <form id="sum-form">
+        <label for="first">First number</label>
+        <input id="first" name="first" type="number" step="any" autocomplete="off">
+        <label for="second">Second number</label>
+        <input id="second" name="second" type="number" step="any" autocomplete="off">
+        <button type="submit">Add</button>
+      </form>
+      <output id="result" for="first second">Enter two numbers to see their sum.</output>
+    </main>
+    <script>
+      const EMPTY_HINT = "Enter two numbers to see their sum.";
+
+      function parseNumber(raw) {
+        if (raw.trim() === "") return null;
+        const value = Number(raw);
+        return Number.isFinite(value) ? value : null;
+      }
+
+      function sumInputs(rawFirst, rawSecond) {
+        const first = parseNumber(rawFirst);
+        const second = parseNumber(rawSecond);
+        if (first === null || second === null) return "";
+        return String(first + second);
+      }
+
+      if (typeof document !== "undefined") {
+        const form = document.getElementById("sum-form");
+        const first = document.getElementById("first");
+        const second = document.getElementById("second");
+        const result = document.getElementById("result");
+
+        const showSum = () => {
+          const sum = sumInputs(first.value, second.value);
+          result.textContent = sum === "" ? EMPTY_HINT : `Sum: ${sum}`;
+        };
+
+        form.addEventListener("submit", (event) => {
+          event.preventDefault();
+          showSum();
+        });
+        first.addEventListener("input", showSum);
+        second.addEventListener("input", showSum);
+      }
+    </script>
+  </body>
+</html>
