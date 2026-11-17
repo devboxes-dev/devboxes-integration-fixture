@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sum two numbers</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #f6f7f9;
+        color: #1b1f24;
+      }
+      main {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgb(0 0 0 / 15%);
+        width: min(22rem, 90vw);
+      }
+      h1 {
+        font-size: 1.25rem;
+        margin: 0 0 1.25rem;
+      }
+      label {
+        display: block;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        font: inherit;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #b9c0ca;
+        border-radius: 0.25rem;
+      }
+      button {
+        font: inherit;
+        padding: 0.5rem 1rem;
+        border: 0;
+        border-radius: 0.25rem;
+        background: #1f6feb;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1a5fd0;
+      }
+      p.result {
+        font-size: 1.125rem;
+        margin: 1rem 0 0;
+      }
+      p.error {
+        color: #b42318;
+        margin: 0.5rem 0 0;
+        min-height: 1.5em;
+      }
+      p.error:empty {
+        min-height: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Add two numbers</h1>
+      <form id="sum-form" novalidate>
+        <label for="first">First number</label>
+        <input id="first" name="first" type="number" step="any" />
+        <label for="second">Second number</label>
+        <input id="second" name="second" type="number" step="any" />
+        <button type="submit">Add</button>
+        <p class="result" aria-live="polite">
+          Sum: <output id="result" for="first second"></output>
+        </p>
+        <p class="error" id="error" role="alert"></p>
+      </form>
+    </main>
+    <script>
+      const form = document.getElementById("sum-form");
+      const first = document.getElementById("first");
+      const second = document.getElementById("second");
+      const result = document.getElementById("result");
+      const error = document.getElementById("error");
+
+      function parseNumber(value) {
+        const trimmed = String(value ?? "").trim();
+        if (trimmed === "") return null;
+        const number = Number(trimmed);
+        return Number.isFinite(number) ? number : null;
+      }
+
+      function calculate() {
+        const a = parseNumber(first.value);
+        const b = parseNumber(second.value);
+        if (a === null || b === null) {
+          result.textContent = "";
+          error.textContent = "Enter two numbers.";
+          return;
+        }
+        error.textContent = "";
+        result.textContent = String(a + b);
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        calculate();
+      });
+    </script>
+  </body>
+</html>
