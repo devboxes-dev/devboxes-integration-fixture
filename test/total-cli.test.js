@@ -45,4 +45,5 @@ test("prints the formatted total for a number of cents", () => {
   assert.deepEqual(runTotal("-150"), { stdout: "-1.50\n", stderr: "", status: 0 });
   assert.deepEqual(runTotal("0"), { stdout: "0.00\n", stderr: "", status: 0 });
   assert.deepEqual(runTotal("12345"), { stdout: "123.45\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("123456789"), { stdout: "1,234,567.89\n", stderr: "", status: 0 });
 });
