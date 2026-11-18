@@ -67,6 +67,32 @@ test("rounds half a cent away from zero", () => {
   assert.deepEqual(runTotal("5", "--tax", "19"), { stdout: "0.06\n", stderr: "", status: 0 });
 });
 
+test("prints large taxed totals exactly", () => {
+  assert.deepEqual(runTotal("9007199254740991", "--tax", "1"), {
+    stdout: "90,972,712,472,884.01\n",
+    stderr: "",
+    status: 0,
+  });
+  assert.deepEqual(runTotal("-9007199254740991", "--tax", "1"), {
+    stdout: "-90,972,712,472,884.01\n",
+    stderr: "",
+    status: 0,
+  });
+});
+
+test("prints absurd tax rates as a decimal total", () => {
+  for (const amount of ["150", "-150"]) {
+    const result = runTotal(amount, "--tax", "1e300");
+    assert.equal(result.status, 0);
+    assert.equal(result.stderr, "");
+    assert.match(result.stdout, /^-?\d{1,3}(,\d{3})*\.\d{2}\n$/);
+  }
+  const longRate = runTotal("150", "--tax", "999999999999999999999");
+  assert.equal(longRate.status, 0);
+  assert.equal(longRate.stderr, "");
+  assert.match(longRate.stdout, /^\d{1,3}(,\d{3})*\.\d{2}\n$/);
+});
+
 test("prints usage for a missing or invalid tax rate", () => {
   assertUsage(runTotal("150", "--tax"));
   assertUsage(runTotal("150", "--tax", "abc"));

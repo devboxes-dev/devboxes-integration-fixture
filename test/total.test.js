@@ -26,6 +26,24 @@ test("totalWithTax taxes negative amounts and keeps their sign", () => {
   assert.equal(totalWithTax(-50, 19), -60);
 });
 
+test("totalWithTax keeps totals above the safe integer range exact", () => {
+  const total = totalWithTax(9007199254740991, 1);
+  assert.equal(typeof total, "bigint");
+  assert.equal(total, 9097271247288401n);
+  assert.equal(formatTotal(total), "90,972,712,472,884.01");
+});
+
+test("totalWithTax returns a number while the total stays a safe integer", () => {
+  assert.equal(typeof totalWithTax(1999, 19), "number");
+  assert.equal(typeof totalWithTax(0, 19), "number");
+});
+
+test("formatTotal writes a total from an absurd tax rate as a decimal number", () => {
+  const total = totalWithTax(150, 1e300);
+  assert.equal(typeof total, "bigint");
+  assert.match(formatTotal(total), /^\d{1,3}(,\d{3})*\.\d{2}$/);
+});
+
 test("formatTotal formats a refund of 150 cents", () => {
   assert.equal(formatTotal(-150), "-1.50");
 });
