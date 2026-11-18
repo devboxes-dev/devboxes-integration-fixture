@@ -1,6 +1,30 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { formatTotal } from "../src/total.js";
+import { formatTotal, totalWithTax } from "../src/total.js";
+
+test("totalWithTax adds a whole-percent tax rate", () => {
+  assert.equal(totalWithTax(1999, 19), 2379);
+  assert.equal(totalWithTax(1000, 25), 1250);
+  assert.equal(totalWithTax(1999, 100), 3998);
+  assert.equal(totalWithTax(150, 0), 150);
+  assert.equal(totalWithTax(0, 19), 0);
+});
+
+test("totalWithTax keeps thousands-sized amounts exact", () => {
+  assert.equal(totalWithTax(123456789, 19), 146913579);
+});
+
+test("totalWithTax rounds half a cent away from zero", () => {
+  assert.equal(totalWithTax(50, 19), 60);
+  assert.equal(totalWithTax(5, 19), 6);
+  assert.equal(totalWithTax(1, 19), 1);
+  assert.equal(totalWithTax(-150, 19), -179);
+});
+
+test("totalWithTax taxes negative amounts and keeps their sign", () => {
+  assert.equal(totalWithTax(-1999, 19), -2379);
+  assert.equal(totalWithTax(-50, 19), -60);
+});
 
 test("formatTotal formats a refund of 150 cents", () => {
   assert.equal(formatTotal(-150), "-1.50");

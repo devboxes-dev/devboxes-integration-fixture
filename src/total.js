@@ -1,3 +1,11 @@
+/** Adds a whole-percent tax rate to an amount in whole cents, rounding half a cent away from zero. */
+export const totalWithTax = (cents, percent) => {
+  const scaled = BigInt(cents) * BigInt(100 + percent);
+  const sign = scaled < 0n ? -1n : 1n;
+  const rounded = (scaled * sign + 50n) / 100n;
+  return Number(sign * rounded);
+};
+
 /** Formats an amount in cents as a decimal string, such as 123456789 as "1,234,567.89". */
 export const formatTotal = (cents) => {
   const sign = cents < 0 ? "-" : "";

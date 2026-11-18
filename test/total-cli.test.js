@@ -18,6 +18,7 @@ const assertUsage = (result) => {
   assert.equal(result.stdout, "");
   assert.match(result.stderr, /^Usage: .*total\.js <amount-in-cents>/);
   assert.match(result.stderr, /amount in cents/);
+  assert.match(result.stderr, /--tax <percent>/);
   assert.doesNotMatch(result.stderr, /NaN/);
 };
 
@@ -46,4 +47,35 @@ test("prints the formatted total for a number of cents", () => {
   assert.deepEqual(runTotal("0"), { stdout: "0.00\n", stderr: "", status: 0 });
   assert.deepEqual(runTotal("12345"), { stdout: "123.45\n", stderr: "", status: 0 });
   assert.deepEqual(runTotal("123456789"), { stdout: "1,234,567.89\n", stderr: "", status: 0 });
+});
+
+test("prints the total with a whole-percent tax rate", () => {
+  assert.deepEqual(runTotal("1999", "--tax", "19"), { stdout: "23.79\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("1000", "--tax", "25"), { stdout: "12.50\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("1999", "--tax", "100"), { stdout: "39.98\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("150", "--tax", "0"), { stdout: "1.50\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("123456789", "--tax", "19"), { stdout: "1,469,135.79\n", stderr: "", status: 0 });
+});
+
+test("prints the total with tax for negative amounts", () => {
+  assert.deepEqual(runTotal("-150", "--tax", "19"), { stdout: "-1.79\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("-1999", "--tax", "19"), { stdout: "-23.79\n", stderr: "", status: 0 });
+});
+
+test("rounds half a cent away from zero", () => {
+  assert.deepEqual(runTotal("50", "--tax", "19"), { stdout: "0.60\n", stderr: "", status: 0 });
+  assert.deepEqual(runTotal("5", "--tax", "19"), { stdout: "0.06\n", stderr: "", status: 0 });
+});
+
+test("prints usage for a missing or invalid tax rate", () => {
+  assertUsage(runTotal("150", "--tax"));
+  assertUsage(runTotal("150", "--tax", "abc"));
+  assertUsage(runTotal("150", "--tax", ""));
+  assertUsage(runTotal("150", "--tax", "7.5"));
+  assertUsage(runTotal("150", "--tax", "-19"));
+  assertUsage(runTotal("150", "--tax=19"));
+  assertUsage(runTotal("150", "--tax", "19", "extra"));
+  assertUsage(runTotal("150", "foo"));
+  assertUsage(runTotal("--tax", "19"));
+  assertUsage(runTotal("150", "--tax", "19", "--tax", "5"));
 });
