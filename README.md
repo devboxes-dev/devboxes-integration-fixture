@@ -7,12 +7,13 @@
 Print an invoice total from an amount in whole cents:
 
 ```sh
-node bin/total.js 150         # prints 1.50
-node bin/total.js -150        # prints -1.50
-node bin/total.js 123456789   # prints 1,234,567.89
+node bin/total.js 150            # prints 1.50
+node bin/total.js -150           # prints -1.50
+node bin/total.js 123456789      # prints 1,234,567.89
+node bin/total.js 1999 --tax 19  # prints 23.79
 ```
 
-Amounts must be whole cents. Run it without one, or with something that is not a whole number — including a fractional amount such as `1.5` — and it prints how to use it and exits with a non-zero status.
+Amounts must be whole cents. Add a tax rate with `--tax` and a whole, non-negative percent: the rate is added to the amount and the total is rounded to the cent, with half a cent rounding away from zero. Run it without an amount, or with something that is not a whole number — including a fractional amount such as `1.5` — or with a missing or invalid `--tax` rate, and it prints how to use it and exits with a non-zero status.
 
 ## Sum page
 
