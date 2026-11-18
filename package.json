@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "node server.js",
     "test": "node --test",
-    "lint": "node --check src/sum.js"
+    "lint": "node --check src/sum.js && node --check src/display-sum.js && node --check server.js && node --check app.js"
   }
 }
