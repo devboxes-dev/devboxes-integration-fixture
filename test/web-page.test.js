@@ -61,6 +61,20 @@ test("page adds decimals and negatives", async () => {
   await page.close();
 });
 
+test("page hides binary floating-point noise", async () => {
+  const { page, a, b, sum } = await openPage();
+
+  await a.fill("0.1");
+  await b.fill("0.2");
+  assert.equal(await sum.textContent(), "0.3");
+
+  await a.fill("1.1");
+  await b.fill("2.2");
+  assert.equal(await sum.textContent(), "3.3");
+
+  await page.close();
+});
+
 test("page shows nothing until both inputs are numbers", async () => {
   const { page, a, b, sum } = await openPage();
 

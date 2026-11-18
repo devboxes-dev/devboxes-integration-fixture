@@ -11,6 +11,17 @@ test("sumText adds decimals and negatives", () => {
   assert.equal(sumText("-2", "3"), "1");
 });
 
+test("sumText hides binary floating-point noise", () => {
+  assert.equal(sumText("0.1", "0.2"), "0.3");
+  assert.equal(sumText("1.1", "2.2"), "3.3");
+  assert.equal(sumText("0.1", "0.7"), "0.8");
+  assert.equal(sumText("0.3", "0.6"), "0.9");
+});
+
+test("sumText keeps 15-digit integer sums", () => {
+  assert.equal(sumText("123456789012345", "1"), "123456789012346");
+});
+
 test("sumText shows nothing until both inputs are numbers", () => {
   assert.equal(sumText("", "3"), "");
   assert.equal(sumText("2", ""), "");

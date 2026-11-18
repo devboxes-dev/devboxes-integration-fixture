@@ -1,12 +1,12 @@
 import { sum } from "./sum.js";
 
-/** Returns the sum of two input values as text, or "" until both are numbers. */
+/** Returns the sum of two input values as text, rounded to hide floating-point noise, or "" until both are numbers. */
 export const sumText = (a, b) => {
   if (String(a).trim() === "" || String(b).trim() === "") {
     return "";
   }
   const total = sum(a, b);
-  return Number.isFinite(total) ? String(total) : "";
+  return Number.isFinite(total) ? String(Number(total.toPrecision(15))) : "";
 };
 
 /** Shows the sum of the two inputs whenever either one changes. */
