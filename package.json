@@ -5,6 +5,10 @@
   "scripts": {
     "start": "node server.js",
     "test": "node --test",
-    "lint": "node --check src/sum.js && node --check src/display-sum.js && node --check server.js && node --check app.js"
+    "check:browser": "node scripts/check-page.js",
+    "lint": "node --check src/sum.js && node --check src/display-sum.js && node --check server.js && node --check app.js && node --check scripts/check-page.js"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
   }
 }
