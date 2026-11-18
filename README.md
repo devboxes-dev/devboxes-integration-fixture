@@ -33,8 +33,8 @@ Install the development dependencies with `npm install`, then run the tests from
 Check that the page works in a real browser with:
 
 ```sh
-npx playwright install chromium   # once
+npx playwright install --with-deps chromium   # once; needs root or sudo on Linux
 npm run check:browser
 ```
 
-It starts the page, types several pairs of numbers into the fields, and checks the sum shown for each. Set `PLAYWRIGHT_CHROMIUM_PATH` to use a Chromium binary that Playwright did not download.
+It starts the page, types several pairs of numbers into the fields, and checks the sum shown for each. On Linux, `--with-deps` also installs the system libraries the browser needs. If you cannot install them that way, install them yourself or set `PLAYWRIGHT_CHROMIUM_PATH` to use a Chromium binary that Playwright did not download.
