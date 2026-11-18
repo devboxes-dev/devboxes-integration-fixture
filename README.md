@@ -1,5 +1,7 @@
 # devboxes-integration-fixture
 
+`bin/total.js` is a command-line script that prints an invoice total from an amount in whole cents.
+
 ## Usage
 
 Print an invoice total from an amount in whole cents:
