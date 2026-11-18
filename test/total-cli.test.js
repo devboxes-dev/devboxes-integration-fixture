@@ -4,11 +4,14 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const cli = fileURLToPath(new URL("../bin/total.js", import.meta.url));
+const cliEnv = { ...process.env };
+delete cliEnv.NODE_USE_ENV_PROXY;
 
 /** Runs the command-line tool and captures how it exited. */
 const runTotal = (...args) => {
   const { stdout, stderr, status } = spawnSync(process.execPath, [cli, ...args], {
     encoding: "utf8",
+    env: cliEnv,
   });
   return { stdout, stderr, status };
 };
