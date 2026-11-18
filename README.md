@@ -26,4 +26,15 @@ Type a number into each field and the sum appears below them as you type. Decima
 
 ## Tests and lint
 
-Run the tests from the repository root with `npm test`, and check the code with `npm run lint`.
+Install the development dependencies with `npm install`, then run the tests from the repository root with `npm test` and check the code with `npm run lint`.
+
+## Browser check
+
+Check that the page works in a real browser with:
+
+```sh
+npx playwright install chromium   # once
+npm run check:browser
+```
+
+It starts the page, types several pairs of numbers into the fields, and checks the sum shown for each. Set `PLAYWRIGHT_CHROMIUM_PATH` to use a Chromium binary that Playwright did not download.
