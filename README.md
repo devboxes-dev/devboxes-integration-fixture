@@ -1,3 +1,5 @@
+A test repository for devboxes: a small command-line invoice-total tool and a web page that adds two numbers.
+
 # devboxes-integration-fixture
 
 `bin/total.js` is a command-line script that prints an invoice total from an amount in whole cents.
