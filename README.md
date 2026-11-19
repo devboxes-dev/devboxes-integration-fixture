@@ -29,6 +29,10 @@ Open the printed URL, such as `http://localhost:3000`, in a browser — the page
 
 Type a number into each field and the sum appears below them as you type. Decimals and negative numbers work, such as `2.5` and `-1`. Set `PORT` to use another port, such as `PORT=8080 npm start`.
 
+## VAT note
+
+`notes/tax-124.md` states that prices include 19% VAT. This is general pricing guidance: `bin/total.js --tax` adds its rate to an amount that is treated as net of tax.
+
 ## Tests and lint
 
 Install the development dependencies with `npm install`, then run the tests from the repository root with `npm test` and check the code with `npm run lint`.
