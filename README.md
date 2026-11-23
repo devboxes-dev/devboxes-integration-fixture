@@ -43,3 +43,5 @@ npm run check:browser
 ```
 
 It starts the page, types several pairs of numbers into the fields, and checks the sum shown for each. On Linux, `--with-deps` also installs the system libraries the browser needs. If you cannot install them that way, install them yourself or set `PLAYWRIGHT_CHROMIUM_PATH` to use a Chromium binary that Playwright did not download.
+
+The sum page also works on phones.
