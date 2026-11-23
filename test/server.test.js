@@ -18,6 +18,7 @@ test("serves the sum page with two number inputs", async () => {
     assert.equal((html.match(/type="number"/g) ?? []).length, 2);
     assert.match(html, /id="first"/);
     assert.match(html, /id="second"/);
+    assert.match(html, /<button id="clear" type="button">Clear<\/button>/);
     assert.match(html, /id="sum"/);
     assert.match(html, /src="\/app\.js"/);
   } finally {

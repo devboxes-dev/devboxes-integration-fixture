@@ -27,7 +27,7 @@ npm start        # prints http://localhost:3000
 
 Open the printed URL, such as `http://localhost:3000`, in a browser — the page works in any modern browser.
 
-Type a number into each field and the sum appears below them as you type. Decimals and negative numbers work, such as `2.5` and `-1`. Set `PORT` to use another port, such as `PORT=8080 npm start`.
+Type a number into each field and the sum appears below them as you type. Use **Clear** to empty both fields. Decimals and negative numbers work, such as `2.5` and `-1`. Set `PORT` to use another port, such as `PORT=8080 npm start`.
 
 ## Tests and lint
 

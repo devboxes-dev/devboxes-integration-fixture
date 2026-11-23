@@ -25,6 +25,7 @@ try {
   const first = page.locator("#first");
   const second = page.locator("#second");
   const sum = page.locator("#sum");
+  const clear = page.locator("#clear");
 
   for (const [left, right, expected] of cases) {
     await first.fill(left);
@@ -34,6 +35,12 @@ try {
   }
 
   await first.fill("");
+  assert.match(await sum.textContent(), /Enter two numbers/);
+  await first.fill("12");
+  await second.fill("34");
+  await clear.click();
+  assert.equal(await first.inputValue(), "");
+  assert.equal(await second.inputValue(), "");
   assert.match(await sum.textContent(), /Enter two numbers/);
   assert.deepEqual(problems, [], "the page logged errors");
   console.log("Browser check passed.");

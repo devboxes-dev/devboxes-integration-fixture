@@ -49,6 +49,17 @@
         outline-offset: 1px;
       }
 
+      button {
+        margin-bottom: 1rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid #9aa5b1;
+        border-radius: 0.35rem;
+        background: #ffffff;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+      }
+
       .result {
         margin: 0;
         padding-top: 1rem;
@@ -68,6 +79,7 @@
       <input id="first" type="number" step="any" autocomplete="off" />
       <label for="second">Second number</label>
       <input id="second" type="number" step="any" autocomplete="off" />
+      <button id="clear" type="button">Clear</button>
       <p class="result">Sum: <output id="sum" for="first second">Enter two numbers to see their sum.</output></p>
     </main>
     <script type="module" src="/app.js"></script>
